@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<h4 class="mb-3">Student Application History</h4>
+
+<div class="card">
+    <div class="card-body table-responsive">
+        <table class="table table-striped align-middle">
+            <thead><tr><th>Drive</th><th>Interview Type</th><th>Job Title</th><th>Result</th><th>Remark</th></tr></thead>
+            <tbody>
+            {% for app in applications %}
+                <tr>
+                    <td>{{ app.drive.drive_name }}</td>
+                    <td>In-person</td>
+                    <td>{{ app.drive.job_title }}</td>
+                    <td>{{ app.status }}</td>
+                    <td>None</td>
+                </tr>
+            {% else %}
+                <tr><td colspan="5" class="text-muted">No history found.</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

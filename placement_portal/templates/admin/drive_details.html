@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card mb-3">
+    <div class="card-header">Drive Details</div>
+    <div class="card-body">
+        <p><strong>Drive Name:</strong> {{ drive.drive_name }}</p>
+        <p><strong>Job Title:</strong> {{ drive.job_title }}</p>
+        <p><strong>Job Description:</strong> {{ drive.job_description }}</p>
+        <p><strong>Eligibility:</strong> {{ drive.eligibility }}</p>
+        <p><strong>Salary:</strong> {{ drive.salary }}</p>
+        <p><strong>Location:</strong> {{ drive.location }}</p>
+        <p><strong>Company:</strong> {{ drive.company.company_name }}</p>
+        <p><strong>Deadline:</strong> {{ drive.application_deadline }}</p>
+        <p><strong>Status:</strong> {{ drive.status }}</p>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">Applications</div>
+    <div class="card-body table-responsive">
+        <table class="table table-striped align-middle">
+            <thead><tr><th>Student</th><th>Department</th><th>Date</th><th>Status</th></tr></thead>
+            <tbody>
+            {% for app in drive.applications %}
+                <tr>
+                    <td>{{ app.student.name }}</td>
+                    <td>{{ app.student.department }}</td>
+                    <td>{{ app.application_date }}</td>
+                    <td>{{ app.status }}</td>
+                </tr>
+            {% else %}
+                <tr><td colspan="4" class="text-muted">No applications yet.</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

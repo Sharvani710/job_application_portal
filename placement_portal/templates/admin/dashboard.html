@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% block content %}
+<h3 class="mb-3">Admin Dashboard</h3>
+
+<div class="card mb-4">
+    <div class="card-header">Registered Companies</div>
+    <div class="card-body table-responsive">
+        <table class="table table-striped align-middle">
+            <thead><tr><th>Company Name</th><th>Action</th></tr></thead>
+            <tbody>
+            {% for company in companies %}
+                <tr>
+                    <td>{{ company.company_name }}</td>
+                    <td>
+                        <form method="post" action="{{ url_for('admin.blacklist_company', company_id=company.id) }}" class="d-inline">
+                            <button class="btn btn-sm btn-outline-danger" type="submit">
+                                {{ 'Unblacklist' if company.is_blacklisted else 'Blacklist' }}
+                            </button>
+                        </form>
+                        <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('admin.company_details', company_id=company.id) }}">View</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">Registered Students</div>
+    <div class="card-body table-responsive">
+        <table class="table table-striped align-middle">
+            <thead><tr><th>Student Name</th><th>Action</th></tr></thead>
+            <tbody>
+            {% for student in students %}
+                <tr>
+                    <td>{{ student.name }}</td>
+                    <td>
+                        <form method="post" action="{{ url_for('admin.blacklist_student', student_id=student.id) }}" class="d-inline">
+                            <button class="btn btn-sm btn-outline-danger" type="submit">
+                                {{ 'Unblacklist' if student.is_blacklisted else 'Blacklist' }}
+                            </button>
+                        </form>
+                        <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('admin.student_details', student_id=student.id) }}">View</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">Company Applications</div>
+    <div class="card-body table-responsive">
+        <table class="table table-striped align-middle">
+            <thead><tr><th>Company</th><th>Approve</th></tr></thead>
+            <tbody>
+            {% for company in pending_companies %}
+                <tr>
+                    <td>{{ company.company_name }}</td>
+                    <td>
+                        <form method="post" action="{{ url_for('admin.approve_company', company_id=company.id) }}">
+                            <button class="btn btn-sm btn-success" type="submit">Approve</button>
+                        </form>
+                    </td>
+                </tr>
+            {% else %}
+                <tr><td colspan="2" class="text-muted">No pending companies.</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">Drive Approvals</div>
+    <div class="card-body table-responsive">
+        <table class="table table-striped align-middle">
+            <thead><tr><th>Drive ID</th><th>Drive Name</th><th>Company</th><th>Action</th></tr></thead>
+            <tbody>
+            {% for drive in pending_drives %}
+                <tr>
+                    <td>{{ drive.id }}</td>
+                    <td>{{ drive.drive_name }}</td>
+                    <td>{{ drive.company.company_name }}</td>
+                    <td>
+                        <form method="post" action="{{ url_for('admin.approve_drive', drive_id=drive.id) }}" class="d-inline">
+                            <button class="btn btn-sm btn-success" type="submit">Approve</button>
+                        </form>
+                        <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('admin.drive_details', drive_id=drive.id) }}">View Details</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr><td colspan="4" class="text-muted">No pending drives.</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">Ongoing Drives</div>
+    <div class="card-body table-responsive">
+        <table class="table table-striped align-middle">
+            <thead><tr><th>Drive ID</th><th>Drive Name</th><th>Actions</th></tr></thead>
+            <tbody>
+            {% for drive in ongoing_drives %}
+                <tr>
+                    <td>{{ drive.id }}</td>
+                    <td>{{ drive.drive_name }}</td>
+                    <td>
+                        <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('admin.drive_details', drive_id=drive.id) }}">View Details</a>
+                        <form method="post" action="{{ url_for('admin.complete_drive', drive_id=drive.id) }}" class="d-inline">
+                            <button class="btn btn-sm btn-warning" type="submit">Mark Complete</button>
+                        </form>
+                    </td>
+                </tr>
+            {% else %}
+                <tr><td colspan="3" class="text-muted">No ongoing drives.</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">Student Applications</div>
+    <div class="card-body table-responsive">
+        <table class="table table-striped align-middle">
+            <thead><tr><th>Student</th><th>Drive</th><th>Company</th><th>Date</th><th>View</th></tr></thead>
+            <tbody>
+            {% for app in applications %}
+                <tr>
+                    <td>{{ app.student.name }}</td>
+                    <td>{{ app.drive.drive_name }}</td>
+                    <td>{{ app.drive.company.company_name }}</td>
+                    <td>{{ app.application_date }}</td>
+                    <td><a class="btn btn-sm btn-outline-primary" href="{{ url_for('admin.drive_details', drive_id=app.drive.id) }}">View</a></td>
+                </tr>
+            {% else %}
+                <tr><td colspan="5" class="text-muted">No applications found.</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

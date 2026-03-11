@@ -1,0 +1,16 @@
+body {
+    background-color: #f5f7fb;
+}
+
+.card {
+    border: 0;
+    box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.08);
+}
+
+.card-header {
+    font-weight: 600;
+}
+
+.table th {
+    white-space: nowrap;
+}

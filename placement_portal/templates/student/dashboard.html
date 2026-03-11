@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block content %}
+<h3 class="mb-3">Student Dashboard</h3>
+
+<div class="card mb-4">
+    <div class="card-header">Available Companies</div>
+    <div class="card-body table-responsive">
+        <table class="table table-striped align-middle">
+            <thead><tr><th>Company</th><th>View Details</th></tr></thead>
+            <tbody>
+            {% for company in available_companies %}
+                <tr>
+                    <td>{{ company.company_name }}</td>
+                    <td>
+                        <a class="btn btn-sm btn-outline-primary" href="{{ url_for('student.company_drives', company_id=company.id) }}">View Details</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr><td colspan="2" class="text-muted">No available companies.</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">Applied Drives</div>
+    <div class="card-body table-responsive">
+        <table class="table table-striped align-middle">
+            <thead><tr><th>Drive Name</th><th>Company</th><th>Date</th><th>View Details</th></tr></thead>
+            <tbody>
+            {% for app in applied_drives %}
+                <tr>
+                    <td>{{ app.drive.drive_name }}</td>
+                    <td>{{ app.drive.company.company_name }}</td>
+                    <td>{{ app.application_date }}</td>
+                    <td><a class="btn btn-sm btn-outline-secondary" href="{{ url_for('student.drive_details', drive_id=app.drive.id) }}">View Details</a></td>
+                </tr>
+            {% else %}
+                <tr><td colspan="4" class="text-muted">No applications yet.</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="mt-3">
+    <a class="btn btn-info text-white" href="{{ url_for('student.application_history') }}">Application History</a>
+</div>
+{% endblock %}

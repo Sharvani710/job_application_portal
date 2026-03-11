@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+    <div class="card-header">Company Details</div>
+    <div class="card-body">
+        <p><strong>Company Name:</strong> {{ company.company_name }}</p>
+        <p><strong>HR Contact:</strong> {{ company.hr_contact }}</p>
+        <p><strong>Website:</strong> {{ company.website or 'N/A' }}</p>
+        <p><strong>Email:</strong> {{ company.email }}</p>
+        <p><strong>Approval Status:</strong> {{ company.approval_status }}</p>
+        <p><strong>Blacklisted:</strong> {{ 'Yes' if company.is_blacklisted else 'No' }}</p>
+        <a class="btn btn-secondary" href="{{ url_for('admin.dashboard') }}">Go Back</a>
+    </div>
+</div>
+{% endblock %}

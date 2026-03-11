@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+    <div class="card-header">Drive Details</div>
+    <div class="card-body">
+        <p><strong>Drive Name:</strong> {{ drive.drive_name }}</p>
+        <p><strong>Job Title:</strong> {{ drive.job_title }}</p>
+        <p><strong>Job Description:</strong> {{ drive.job_description }}</p>
+        <p><strong>Salary:</strong> {{ drive.salary }}</p>
+        <p><strong>Location:</strong> {{ drive.location }}</p>
+        <p><strong>Company Name:</strong> {{ drive.company.company_name }}</p>
+
+        <div class="d-flex gap-2 mt-3">
+            {% if already_applied %}
+                <button class="btn btn-secondary" disabled>Already Applied</button>
+            {% else %}
+                <form method="post" action="{{ url_for('student.apply_drive', drive_id=drive.id) }}">
+                    <button class="btn btn-success" type="submit">Apply</button>
+                </form>
+            {% endif %}
+            <a class="btn btn-outline-secondary" href="{{ url_for('student.dashboard') }}">Go Back</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

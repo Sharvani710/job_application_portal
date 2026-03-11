@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+    <div class="card-header">Student Application Review</div>
+    <div class="card-body">
+        <p><strong>Student Name:</strong> {{ application.student.name }}</p>
+        <p><strong>Department:</strong> {{ application.student.department }}</p>
+        <p><strong>Drive Name:</strong> {{ application.drive.drive_name }}</p>
+        <p><strong>Job Title:</strong> {{ application.drive.job_title }}</p>
+        <p><strong>Current Status:</strong> {{ application.status }}</p>
+        <p><strong>Resume:</strong> {{ application.student.resume or 'Not provided' }}</p>
+
+        <div class="d-flex gap-2 mt-3">
+            <form method="post">
+                <input type="hidden" name="action" value="Shortlisted">
+                <button class="btn btn-success" type="submit">Shortlist</button>
+            </form>
+            <form method="post">
+                <input type="hidden" name="action" value="Rejected">
+                <button class="btn btn-danger" type="submit">Reject</button>
+            </form>
+            <form method="post">
+                <input type="hidden" name="action" value="Waiting">
+                <button class="btn btn-secondary" type="submit">Waiting</button>
+            </form>
+            {% if application.student.resume %}
+                <a class="btn btn-outline-primary" target="_blank" href="{{ application.student.resume }}">View Resume</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

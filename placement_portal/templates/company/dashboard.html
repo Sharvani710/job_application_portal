@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block content %}
+<h3 class="mb-3">Welcome {{ current_user.company_name }}</h3>
+
+<div class="mb-3">
+    <a class="btn btn-primary" href="{{ url_for('company.create_drive') }}">Create Drive</a>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">Upcoming Drives</div>
+    <div class="card-body table-responsive">
+        <table class="table table-striped align-middle">
+            <thead><tr><th>Drive ID</th><th>Drive Name</th><th>Actions</th></tr></thead>
+            <tbody>
+            {% for drive in upcoming_drives %}
+                <tr>
+                    <td>{{ drive.id }}</td>
+                    <td>{{ drive.drive_name }}</td>
+                    <td>
+                        <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('company.drive_details', drive_id=drive.id) }}">View Details</a>
+                        <form method="post" action="{{ url_for('company.mark_drive_complete', drive_id=drive.id) }}" class="d-inline">
+                            <button class="btn btn-sm btn-warning" type="submit">Mark Complete</button>
+                        </form>
+                        <a class="btn btn-sm btn-outline-primary" href="{{ url_for('company.update_applications', drive_id=drive.id) }}">Applications</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr><td colspan="3" class="text-muted">No upcoming drives.</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">Closed Drives</div>
+    <div class="card-body table-responsive">
+        <table class="table table-striped align-middle">
+            <thead><tr><th>Drive ID</th><th>Drive Name</th><th>Update</th></tr></thead>
+            <tbody>
+            {% for drive in closed_drives %}
+                <tr>
+                    <td>{{ drive.id }}</td>
+                    <td>{{ drive.drive_name }}</td>
+                    <td>
+                        <a class="btn btn-sm btn-outline-primary" href="{{ url_for('company.update_applications', drive_id=drive.id) }}">Update</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr><td colspan="3" class="text-muted">No closed drives.</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
