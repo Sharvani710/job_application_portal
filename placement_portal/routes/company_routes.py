@@ -55,6 +55,9 @@ def create_drive():
         location = request.form.get("location", "").strip()
         deadline_str = request.form.get("application_deadline", "").strip()
 
+        if not drive_name:
+            drive_name = f"{job_title} Drive"
+
         deadline = datetime.strptime(deadline_str, "%Y-%m-%d").date()
 
         drive = PlacementDrive(

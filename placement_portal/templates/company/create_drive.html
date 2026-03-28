@@ -1,26 +1,32 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="card">
-    <div class="card-header">Create Drive</div>
+<h2 class="page-title"><i class="bi bi-briefcase-fill"></i>Create New Placement Drive</h2>
+
+<div class="card section-primary">
+    <div class="card-header">Drive Information</div>
     <div class="card-body">
         <form method="post">
             <div class="row g-3">
-                <div class="col-md-6">
-                    <label class="form-label">Drive Name</label>
-                    <input type="text" name="drive_name" class="form-control" required>
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label">Job Title</label>
+                <div class="col-12">
+                    <label class="form-label">Job Title <span class="text-danger">*</span></label>
                     <input type="text" name="job_title" class="form-control" required>
                 </div>
+
+                <div class="col-12">
+                    <label class="form-label">Drive Name</label>
+                    <input type="text" name="drive_name" class="form-control" placeholder="Optional, for example: Campus Recruitment 2026">
+                </div>
+
                 <div class="col-12">
                     <label class="form-label">Job Description</label>
-                    <textarea name="job_description" class="form-control" rows="3" required></textarea>
+                    <textarea name="job_description" class="form-control" rows="4" placeholder="Enter detailed job description" required></textarea>
                 </div>
+
                 <div class="col-12">
                     <label class="form-label">Eligibility Criteria</label>
-                    <textarea name="eligibility" class="form-control" rows="2" required></textarea>
+                    <textarea name="eligibility" class="form-control" rows="3" placeholder="Eligible branches, CGPA, and other criteria" required></textarea>
                 </div>
+
                 <div class="col-md-4">
                     <label class="form-label">Salary</label>
                     <input type="text" name="salary" class="form-control" required>
@@ -30,11 +36,15 @@
                     <input type="text" name="location" class="form-control" required>
                 </div>
                 <div class="col-md-4">
-                    <label class="form-label">Application Deadline</label>
+                    <label class="form-label">Application Deadline <span class="text-danger">*</span></label>
                     <input type="date" name="application_deadline" class="form-control" required>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary mt-3">Save</button>
+
+            <div class="mt-3 d-flex gap-2 flex-wrap">
+                <button type="submit" class="btn btn-primary"><i class="bi bi-plus-lg"></i> Create Drive</button>
+                <a class="btn btn-secondary" href="{{ url_for('company.dashboard') }}"><i class="bi bi-x-lg"></i> Cancel</a>
+            </div>
         </form>
     </div>
 </div>

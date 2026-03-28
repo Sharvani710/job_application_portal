@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="card">
-    <div class="card-header">Student Details</div>
+<div class="card section-success">
+    <div class="card-header"><i class="bi bi-person-badge me-1"></i>Student Details</div>
     <div class="card-body">
         <p><strong>Name:</strong> {{ student.name }}</p>
         <p><strong>Email:</strong> {{ student.email }}</p>
         <p><strong>Department:</strong> {{ student.department }}</p>
         <p><strong>Blacklisted:</strong> {{ 'Yes' if student.is_blacklisted else 'No' }}</p>
         <p><strong>Resume:</strong> {{ student.resume or 'Not provided' }}</p>
-        <a class="btn btn-secondary" href="{{ url_for('admin.dashboard') }}">Go Back</a>
+        <a class="btn btn-secondary" href="{{ url_for('admin.dashboard') }}"><i class="bi bi-arrow-left me-1"></i>Go Back</a>
     </div>
 </div>
 {% endblock %}

@@ -18,34 +18,38 @@ def login():
         return redirect(url_for("student.dashboard"))
 
     if request.method == "POST":
+        selected_role = request.form.get("role", "").strip().lower()
         username = request.form.get("username", "").strip()
         password = request.form.get("password", "")
 
-        user = Admin.query.filter_by(username=username).first()
-        if user and user.check_password(password):
-            login_user(user)
-            return redirect(url_for("admin.dashboard"))
+        if selected_role in ("", "admin"):
+            user = Admin.query.filter_by(username=username).first()
+            if user and user.check_password(password):
+                login_user(user)
+                return redirect(url_for("admin.dashboard"))
 
-        company = Company.query.filter_by(email=username).first()
-        if company and company.check_password(password):
-            if company.approval_status != "Approved":
-                flash("Company account is pending admin approval.", "warning")
-                return redirect(url_for("auth.login"))
-            if company.is_blacklisted:
-                flash("Company is blacklisted.", "danger")
-                return redirect(url_for("auth.login"))
+        if selected_role in ("", "company"):
+            company = Company.query.filter_by(email=username).first()
+            if company and company.check_password(password):
+                if company.approval_status != "Approved":
+                    flash("Company account is pending admin approval.", "warning")
+                    return redirect(url_for("auth.login"))
+                if company.is_blacklisted:
+                    flash("Company is blacklisted.", "danger")
+                    return redirect(url_for("auth.login"))
 
-            login_user(company)
-            return redirect(url_for("company.dashboard"))
+                login_user(company)
+                return redirect(url_for("company.dashboard"))
 
-        student = Student.query.filter_by(email=username).first()
-        if student and student.check_password(password):
-            if student.is_blacklisted:
-                flash("Student account is blacklisted.", "danger")
-                return redirect(url_for("auth.login"))
+        if selected_role in ("", "student"):
+            student = Student.query.filter_by(email=username).first()
+            if student and student.check_password(password):
+                if student.is_blacklisted:
+                    flash("Student account is blacklisted.", "danger")
+                    return redirect(url_for("auth.login"))
 
-            login_user(student)
-            return redirect(url_for("student.dashboard"))
+                login_user(student)
+                return redirect(url_for("student.dashboard"))
 
         flash("Invalid credentials.", "danger")
 
@@ -115,4 +119,5 @@ def register_company():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for("auth.login"))
+    flash("Logged out successfully", "success")
+    return redirect(url_for("index"))

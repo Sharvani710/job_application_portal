@@ -1,24 +1,31 @@
 {% extends 'base.html' %}
 {% block content %}
-<h4 class="mb-3">{{ company.company_name }} - Approved Drives</h4>
+<h3 class="page-title"><i class="bi bi-building"></i>{{ company.company_name }}</h3>
 
-<div class="card">
+<div class="card section-primary mb-3">
+    <div class="card-header">Overview</div>
+    <div class="card-body">
+        <p class="mb-2">Through the application of innovation and our contextual knowledge, we give companies the capability to foster transformation outcomes that benefit society.</p>
+        <p class="mb-1"><strong>Email:</strong> {{ company.email }}</p>
+        <p class="mb-1"><strong>HR Contact:</strong> {{ company.hr_contact }}</p>
+        <p class="mb-0"><strong>Website:</strong> {{ company.website or 'N/A' }}</p>
+    </div>
+</div>
+
+<div class="card section-sky">
+    <div class="card-header">Current Drives</div>
     <div class="card-body table-responsive">
         <table class="table table-striped align-middle">
-            <thead><tr><th>Drive ID</th><th>Drive Name</th><th>Job Title</th><th>Deadline</th><th>Action</th></tr></thead>
+            <thead><tr><th>Sr No.</th><th>Drive Name</th><th>Action</th></tr></thead>
             <tbody>
             {% for drive in drives %}
                 <tr>
-                    <td>{{ drive.id }}</td>
+                    <td>{{ loop.index }}</td>
                     <td>{{ drive.drive_name }}</td>
-                    <td>{{ drive.job_title }}</td>
-                    <td>{{ drive.application_deadline }}</td>
-                    <td>
-                        <a class="btn btn-sm btn-outline-primary" href="{{ url_for('student.drive_details', drive_id=drive.id) }}">View Drive</a>
-                    </td>
+                    <td><a class="btn btn-sm btn-outline-primary" href="{{ url_for('student.drive_details', drive_id=drive.id) }}">view details</a></td>
                 </tr>
             {% else %}
-                <tr><td colspan="5" class="text-muted">No approved drives available for this company.</td></tr>
+                <tr><td colspan="3" class="text-muted">No approved drives available for this company.</td></tr>
             {% endfor %}
             </tbody>
         </table>

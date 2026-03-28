@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="card mb-3">
-    <div class="card-header">Drive Details</div>
+<div class="card section-primary mb-3">
+    <div class="card-header"><i class="bi bi-card-list me-1"></i>Drive Details</div>
     <div class="card-body">
         <p><strong>Drive Name:</strong> {{ drive.drive_name }}</p>
         <p><strong>Job Title:</strong> {{ drive.job_title }}</p>
@@ -15,8 +15,8 @@
     </div>
 </div>
 
-<div class="card">
-    <div class="card-header">Applications</div>
+<div class="card section-sky">
+    <div class="card-header"><i class="bi bi-file-earmark-text me-1"></i>Applications</div>
     <div class="card-body table-responsive">
         <table class="table table-striped align-middle">
             <thead><tr><th>Student</th><th>Department</th><th>Date</th><th>Status</th></tr></thead>

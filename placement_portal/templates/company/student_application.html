@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="card">
-    <div class="card-header">Student Application Review</div>
+<div class="card section-primary">
+    <div class="card-header"><i class="bi bi-person-lines-fill me-1"></i>Student Application Review</div>
     <div class="card-body">
         <p><strong>Student Name:</strong> {{ application.student.name }}</p>
         <p><strong>Department:</strong> {{ application.student.department }}</p>
@@ -13,15 +13,15 @@
         <div class="d-flex gap-2 mt-3">
             <form method="post">
                 <input type="hidden" name="action" value="Shortlisted">
-                <button class="btn btn-success" type="submit">Shortlist</button>
+                <button class="btn btn-success" type="submit"><i class="bi bi-check-lg me-1"></i>Shortlist</button>
             </form>
             <form method="post">
                 <input type="hidden" name="action" value="Rejected">
-                <button class="btn btn-danger" type="submit">Reject</button>
+                <button class="btn btn-danger" type="submit"><i class="bi bi-x-lg me-1"></i>Reject</button>
             </form>
             <form method="post">
                 <input type="hidden" name="action" value="Waiting">
-                <button class="btn btn-secondary" type="submit">Waiting</button>
+                <button class="btn btn-secondary" type="submit"><i class="bi bi-hourglass-split me-1"></i>Waiting</button>
             </form>
             {% if application.student.resume %}
                 <a class="btn btn-outline-primary" target="_blank" href="{{ application.student.resume }}">View Resume</a>

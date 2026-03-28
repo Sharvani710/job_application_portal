@@ -1,24 +1,37 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="card">
-    <div class="card-header">Drive Details</div>
+<div class="card section-primary">
+    <div class="card-header"><i class="bi bi-card-list me-1"></i>{{ drive.drive_name }}</div>
     <div class="card-body">
-        <p><strong>Drive Name:</strong> {{ drive.drive_name }}</p>
-        <p><strong>Job Title:</strong> {{ drive.job_title }}</p>
-        <p><strong>Job Description:</strong> {{ drive.job_description }}</p>
-        <p><strong>Salary:</strong> {{ drive.salary }}</p>
-        <p><strong>Location:</strong> {{ drive.location }}</p>
-        <p><strong>Company Name:</strong> {{ drive.company.company_name }}</p>
+        <div class="row g-3 align-items-center">
+            <div class="col-md-7">
+                <p><strong>Job Title:</strong> {{ drive.job_title }}</p>
+                <p><strong>Eligibility:</strong> {{ drive.eligibility }}</p>
+                <p><strong>Job Description:</strong> {{ drive.job_description }}</p>
+                <p><strong>Salary:</strong> {{ drive.salary }}</p>
+                <p class="mb-0"><strong>Location:</strong> {{ drive.location }}</p>
+            </div>
+            <div class="col-md-5">
+                <div class="company-brand-block">
+                    <div class="brand-orbs">
+                        <span class="orb orb-a"></span>
+                        <span class="orb orb-b"></span>
+                        <span class="orb orb-c"></span>
+                    </div>
+                    <div class="brand-name">{{ drive.company.company_name|upper }}</div>
+                </div>
+            </div>
+        </div>
 
         <div class="d-flex gap-2 mt-3">
             {% if already_applied %}
                 <button class="btn btn-secondary" disabled>Already Applied</button>
             {% else %}
                 <form method="post" action="{{ url_for('student.apply_drive', drive_id=drive.id) }}">
-                    <button class="btn btn-success" type="submit">Apply</button>
+                    <button class="btn btn-primary" type="submit">Apply</button>
                 </form>
             {% endif %}
-            <a class="btn btn-outline-secondary" href="{{ url_for('student.dashboard') }}">Go Back</a>
+            <a class="btn btn-outline-secondary" href="{{ url_for('student.company_drives', company_id=drive.company.id) }}">Go Back</a>
         </div>
     </div>
 </div>

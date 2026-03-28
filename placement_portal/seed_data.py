@@ -131,6 +131,38 @@ def seed_dummy_data() -> None:
         password="company123",
         approval_status="Pending",
     )
+    get_or_create_company(
+        company_name="Nova Systems",
+        hr_contact="Isha Reddy",
+        website="https://novasystems.example.com",
+        email="nova@company.com",
+        password="company123",
+        approval_status="Approved",
+    )
+    get_or_create_company(
+        company_name="Skyline Dynamics",
+        hr_contact="Rahul Menon",
+        website="https://skyline.example.com",
+        email="skyline@company.com",
+        password="company123",
+        approval_status="Approved",
+    )
+    get_or_create_company(
+        company_name="OrbitWorks",
+        hr_contact="Sneha Rao",
+        website="https://orbitworks.example.com",
+        email="orbitworks@company.com",
+        password="company123",
+        approval_status="Pending",
+    )
+    get_or_create_company(
+        company_name="Zenith Tech",
+        hr_contact="Aditya Singh",
+        website="https://zenithtech.example.com",
+        email="zenith@company.com",
+        password="company123",
+        approval_status="Approved",
+    )
 
     s1 = get_or_create_student(
         name="Aarav Mehta",

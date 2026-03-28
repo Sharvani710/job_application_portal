@@ -1,53 +1,74 @@
 {% extends 'base.html' %}
 {% block content %}
-<h3 class="mb-3">Welcome {{ current_user.company_name }}</h3>
+<h2 class="page-title"><i class="bi bi-building"></i>Company Dashboard</h2>
 
-<div class="mb-3">
-    <a class="btn btn-primary" href="{{ url_for('company.create_drive') }}">Create Drive</a>
+<div class="card section-primary">
+    <div class="card-header"><i class="bi bi-info-circle-fill me-1"></i>Company Information</div>
+    <div class="card-body">
+        <div class="row g-3">
+            <div class="col-md-6">
+                <p class="mb-2"><strong>Company Name:</strong> {{ current_user.company_name }}</p>
+                <p class="mb-2"><strong>Email:</strong> {{ current_user.email }}</p>
+                <p class="mb-2"><strong>Website:</strong> {{ current_user.website or 'N/A' }}</p>
+            </div>
+            <div class="col-md-6">
+                <p class="mb-2"><strong>HR Contact:</strong> {{ current_user.hr_contact }}</p>
+                <p class="mb-2"><strong>Status:</strong> <span class="badge text-bg-success">{{ current_user.approval_status }}</span></p>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div class="card mb-4">
-    <div class="card-header">Upcoming Drives</div>
+<div class="mb-3">
+    <a class="btn btn-success" href="{{ url_for('company.create_drive') }}"><i class="bi bi-plus-lg"></i> Create New Placement Drive</a>
+</div>
+
+<div class="card section-sky mb-4">
+    <div class="card-header"><i class="bi bi-briefcase-fill me-1"></i>My Placement Drives ({{ upcoming_drives|length }})</div>
     <div class="card-body table-responsive">
         <table class="table table-striped align-middle">
-            <thead><tr><th>Drive ID</th><th>Drive Name</th><th>Actions</th></tr></thead>
+            <thead><tr><th>ID</th><th>Job Title</th><th>Deadline</th><th>Status</th><th>Applications</th><th>Actions</th></tr></thead>
             <tbody>
             {% for drive in upcoming_drives %}
                 <tr>
                     <td>{{ drive.id }}</td>
-                    <td>{{ drive.drive_name }}</td>
+                    <td>{{ drive.job_title }}</td>
+                    <td>{{ drive.application_deadline }}</td>
                     <td>
-                        <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('company.drive_details', drive_id=drive.id) }}">View Details</a>
+                        <span class="badge text-bg-{{ 'success' if drive.status == 'Approved' else 'warning' }}">{{ drive.status }}</span>
+                    </td>
+                    <td>{{ drive.applications|length }}</td>
+                    <td>
+                        <a class="btn btn-sm btn-primary" href="{{ url_for('company.update_applications', drive_id=drive.id) }}">View ({{ drive.applications|length }})</a>
+                        <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('company.drive_details', drive_id=drive.id) }}">Details</a>
                         <form method="post" action="{{ url_for('company.mark_drive_complete', drive_id=drive.id) }}" class="d-inline">
-                            <button class="btn btn-sm btn-warning" type="submit">Mark Complete</button>
+                            <button class="btn btn-sm btn-warning" type="submit">Close</button>
                         </form>
-                        <a class="btn btn-sm btn-outline-primary" href="{{ url_for('company.update_applications', drive_id=drive.id) }}">Applications</a>
                     </td>
                 </tr>
             {% else %}
-                <tr><td colspan="3" class="text-muted">No upcoming drives.</td></tr>
+                <tr><td colspan="6" class="text-muted">No active drives.</td></tr>
             {% endfor %}
             </tbody>
         </table>
     </div>
 </div>
 
-<div class="card">
-    <div class="card-header">Closed Drives</div>
+<div class="card section-warning">
+    <div class="card-header"><i class="bi bi-archive-fill me-1"></i>Closed Drives ({{ closed_drives|length }})</div>
     <div class="card-body table-responsive">
         <table class="table table-striped align-middle">
-            <thead><tr><th>Drive ID</th><th>Drive Name</th><th>Update</th></tr></thead>
+            <thead><tr><th>ID</th><th>Drive Name</th><th>Status</th><th>Update</th></tr></thead>
             <tbody>
             {% for drive in closed_drives %}
                 <tr>
                     <td>{{ drive.id }}</td>
                     <td>{{ drive.drive_name }}</td>
-                    <td>
-                        <a class="btn btn-sm btn-outline-primary" href="{{ url_for('company.update_applications', drive_id=drive.id) }}">Update</a>
-                    </td>
+                    <td><span class="badge text-bg-secondary">{{ drive.status }}</span></td>
+                    <td><a class="btn btn-sm btn-outline-primary" href="{{ url_for('company.update_applications', drive_id=drive.id) }}">Update</a></td>
                 </tr>
             {% else %}
-                <tr><td colspan="3" class="text-muted">No closed drives.</td></tr>
+                <tr><td colspan="4" class="text-muted">No closed drives.</td></tr>
             {% endfor %}
             </tbody>
         </table>

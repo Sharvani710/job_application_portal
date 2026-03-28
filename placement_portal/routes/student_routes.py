@@ -1,7 +1,7 @@
 from datetime import date
 from functools import wraps
 
-from flask import Blueprint, abort, flash, redirect, render_template, url_for
+from flask import Blueprint, abort, flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
 
 from extensions import db
@@ -123,3 +123,25 @@ def apply_drive(drive_id: int):
 def application_history():
     applications = Application.query.filter_by(student_id=current_user.id).all()
     return render_template("student/application_history.html", applications=applications)
+
+
+@student_bp.route("/profile/edit", methods=["GET", "POST"])
+@student_required
+def edit_profile():
+    if request.method == "POST":
+        name = request.form.get("name", "").strip()
+        department = request.form.get("department", "").strip()
+        resume = request.form.get("resume", "").strip()
+
+        if not name or not department:
+            flash("Name and department are required.", "warning")
+            return redirect(url_for("student.edit_profile"))
+
+        current_user.name = name
+        current_user.department = department
+        current_user.resume = resume
+        db.session.commit()
+        flash("Profile updated successfully.", "success")
+        return redirect(url_for("student.dashboard"))
+
+    return render_template("student/edit_profile.html")

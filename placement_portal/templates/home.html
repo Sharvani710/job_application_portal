@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="auth-showcase mb-4">
+    <div class="mini-auth-card">
+        <h6>Login Form</h6>
+        <p>Username</p>
+        <input type="text" class="form-control form-control-sm" disabled>
+        <p>Password</p>
+        <input type="password" class="form-control form-control-sm" disabled>
+        <a class="btn btn-sm btn-primary mt-2" href="{{ url_for('auth.login') }}">Login</a>
+        <small>Do not have an account? Register</small>
+    </div>
+    <div class="mini-auth-card">
+        <h6>Register Form</h6>
+        <p>Username</p>
+        <input type="text" class="form-control form-control-sm" disabled>
+        <p>Password</p>
+        <input type="password" class="form-control form-control-sm" disabled>
+        <div class="d-flex gap-2 mt-2">
+            <a class="btn btn-sm btn-success" href="{{ url_for('auth.register_student') }}">Student</a>
+            <a class="btn btn-sm btn-info text-white" href="{{ url_for('auth.register_company') }}">Company</a>
+        </div>
+        <small>Already have an account? Login</small>
+    </div>
+</div>
+
+<div class="hero-block">
+    <h1 class="hero-title">Welcome to Placement Portal</h1>
+    <p class="lead mb-4">Streamline your campus recruitment process with our comprehensive placement management system.</p>
+    <hr>
+    <p class="fs-5 mb-4">Connect companies with talented students and manage placement drives efficiently.</p>
+    <div class="d-flex gap-2 flex-wrap">
+        <a class="btn btn-primary" href="{{ url_for('auth.login') }}"><i class="bi bi-box-arrow-in-right me-1"></i>Login</a>
+        <a class="btn btn-success" href="{{ url_for('auth.register_student') }}"><i class="bi bi-person-plus-fill me-1"></i>Register as Student</a>
+        <a class="btn btn-info text-white" href="{{ url_for('auth.register_company') }}"><i class="bi bi-building-add me-1"></i>Register as Company</a>
+    </div>
+</div>
+
+<div class="feature-grid">
+    <article class="feature-card">
+        <i class="bi bi-person-badge-fill text-primary"></i>
+        <h5>For Admin</h5>
+        <p>Manage companies, students, and placement drives. Approve registrations and monitor activities.</p>
+    </article>
+    <article class="feature-card">
+        <i class="bi bi-building-fill text-success"></i>
+        <h5>For Companies</h5>
+        <p>Create placement drives, review applications, and recruit talented students for your organization.</p>
+    </article>
+    <article class="feature-card">
+        <i class="bi bi-mortarboard-fill text-info"></i>
+        <h5>For Students</h5>
+        <p>Apply for placement drives, track your application status, and land your dream job.</p>
+    </article>
+</div>
+{% endblock %}
